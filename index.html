@@ -2,72 +2,36 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <title>正在验证...</title>
+  <title>正在跳转到支付宝收款页面...</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body { font-family: sans-serif; text-align: center; margin-top: 100px; background: #f9f9f9; }
-    #verifyBtn {
-      padding: 12px 24px;
-      font-size: 18px;
-      background: #1aad19;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 100px;
+      background-color: #f5f5f5;
     }
-    #status { margin-top: 30px; font-size: 16px; color: #555; }
   </style>
-</head>
-<body>
-  <h2>请进行人机验证</h2>
-  <button id="verifyBtn">我是人类</button>
-  <div id="status">正在加载验证码模块...</div>
-
   <script>
+    // 防调试
     (function () {
-      const urls = [
-        "https://a78521336.github.io/1/",
-        "https://a78521336.github.io/2/",
-        "https://a78521336.github.io/3/"
-      ];
-
-      function antiDebug() {
-        const t = 160;
-        const n = new Date();
-        debugger;
-        const e = new Date();
-        if (e - n > t) {
-          document.body.innerHTML = "<h2>检测到非法调试，跳转已终止。</h2>";
-          throw new Error("Debugger detected");
-        }
-      }
-
-      const btn = document.getElementById('verifyBtn');
-      const status = document.getElementById('status');
-
-      btn.addEventListener('click', function () {
-        status.innerText = "验证通过，正在跳转...";
-        btn.disabled = true;
-        btn.innerText = "验证中...";
-        
-        const delay = Math.floor(Math.random() * 2000) + 1000; // 1-3秒延迟
-        setTimeout(function () {
-          try {
-            antiDebug();
-            const target = urls[Math.floor(Math.random() * urls.length)];
-            location.href = target;
-          } catch (e) {
-            console.warn(e);
-          }
-        }, delay);
-      });
-
-      if (!document.hasFocus()) {
-        status.innerText = "请点击页面以继续...";
-        window.addEventListener("focus", () => location.reload());
-        btn.disabled = true;
+      const start = Date.now();
+      debugger;
+      const cost = Date.now() - start;
+      if (cost > 100) {
+        document.body.innerHTML = "<h2>检测到调试行为，已中止跳转。</h2>";
+        throw new Error("调试被阻止");
       }
     })();
+
+    // 随机延迟后跳转
+    const delay = Math.floor(Math.random() * 2000) + 1000; // 1-3秒随机延迟
+    setTimeout(() => {
+      window.location.href = "https://qr.alipay.com/fkx17625jyaptmgpylbosce";
+    }, delay);
   </script>
+</head>
+<body>
+  <h2>请稍候，正在跳转收款页面...</h2>
 </body>
 </html>
